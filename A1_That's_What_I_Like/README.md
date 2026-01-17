@@ -65,3 +65,16 @@ Paragraph Vectors: The system pre-computes vector representations for thousands 
 Multi-Model Selector: Users can select between our custom models (Skip-gram, GloVe) and the pre-trained Gensim model via a dropdown menu to compare search results dynamically.
 
 Cosine Similarity: When a user enters a query (e.g., "market crisis"), the system converts the query into a vector and finds the top 5 most similar documents in the corpus using cosine similarity.
+
+### File Structure 
+
+search_app/
+├── app.py                  # The main Flask backend script
+├── artefacts/              # Folder for your saved model files
+│   ├── skipgram.pkl
+│   ├── skipgramneg.pkl
+│   └── glove.pkl
+└── templates/              # Folder for HTML files (Required by Flask)
+    └── index.html          # The search engine frontend interface
+
+In order to sync with the environment set up please run `pip install -m requirements.txt` first. Then go to app folder and start the web app with `python app.py`.
