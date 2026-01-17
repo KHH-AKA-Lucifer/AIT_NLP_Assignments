@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multi-Model Semantic Search</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 900px; margin: 40px auto; background-color: #f4f7f6; color: #333; }
+        h1 { text-align: center; color: #2c3e50; }
+        
+        /* Search Box Styling */
+        .search-container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        
+        select { padding: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 4px; background: #fff; cursor: pointer; flex: 1; min-width: 150px; }
+        input[type="text"] { padding: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 4px; flex: 3; min-width: 300px; }
+        button { padding: 12px 25px; font-size: 16px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s; }
+        button:hover { background-color: #2980b9; }
+
+        /* Results Styling */
+        .results-area { margin-top: 30px; }
+        .result-card { background: white; padding: 20px; margin-bottom: 15px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid #3498db; }
+        .meta { font-size: 0.9em; color: #7f8c8d; margin-bottom: 8px; font-weight: bold; }
+        .text { line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <h1>A1: That's What I like</h1>
+
+    <div class="search-container">
+        <form method="POST" style="display: flex; gap: 10px; width: 100%;">
+            <select name="model_selector">
+                {% for m in models %}
+                    <option value="{{ m }}" {% if m == selected_model %}selected{% endif %}>
+                        Model: {{ m|upper }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <input type="text" name="query" placeholder="Enter topic (e.g., gold mine, market crash)..." value="{{ query }}" required>
+            
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="results-area">
+        {% if results %}
+            <h3>Results using {{ selected_model|upper }}:</h3>
+            {% for res in results %}
+                <div class="result-card">
+                    <div class="meta">Similarity Score: {{ "%.4f"|format(res.score) }}</div>
+                    <div class="text">{{ res.text }}</div>
+                </div>
+            {% endfor %}
+        {% elif query %}
+            <p style="text-align: center">No results found.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
