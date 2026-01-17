@@ -68,6 +68,7 @@ Cosine Similarity: When a user enters a query (e.g., "market crisis"), the syste
 
 ### File Structure 
 
+```
 search_app/
 ├── app.py                  # The main Flask backend script
 ├── artefacts/              # Folder for your saved model files
@@ -76,5 +77,6 @@ search_app/
 │   └── glove.pkl
 └── templates/              # Folder for HTML files (Required by Flask)
     └── index.html          # The search engine frontend interface
+```
 
 In order to sync with the environment set up please run `pip install -m requirements.txt` first. Then go to app folder and start the web app with `python app.py`.
