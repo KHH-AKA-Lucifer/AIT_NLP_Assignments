@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Myanmar → English MT</title>
+  <style>
+    body { font-family: Arial; margin: 40px; max-width: 900px; }
+    textarea { width: 100%; height: 120px; }
+    .box { margin-top: 16px; padding: 12px; border: 1px solid #ddd; }
+  </style>
+</head>
+<body>
+  <h2>Myanmar (Burmese) → English Translation</h2>
+  <form method="POST">
+    <label>Input (Myanmar):</label><br/>
+    <textarea name="src">{{ src_text }}</textarea><br/>
+    <button type="submit">Translate</button>
+  </form>
+
+  {% if out_text %}
+    <div class="box">
+      <b>Output (English):</b>
+      <p>{{ out_text }}</p>
+    </div>
+  {% endif %}
+</body>
+</html>
