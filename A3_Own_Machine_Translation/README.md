@@ -17,7 +17,7 @@ The best-performing model  is deployed in a simple **Flask web application**.
 The **TED2020 Myanmar–English parallel corpus** from the OPUS project is used.
 
 - Language pair: `my` (Myanmar) → `en` (English)
-- Source: https://opus.nlpl.eu/TED2020.php
+- Source: https://opus.nlpl.eu/datasets/TED2020?pair=en&my
 
 ### Data Split
 
