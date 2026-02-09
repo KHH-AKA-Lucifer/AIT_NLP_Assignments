@@ -1,12 +1,13 @@
 ## A3 – Own Machine Translation System (Myanmar → English)
 
-This project implements a **neural machine translation (NMT)** system for **Myanmar (Burmese) → English** using a **Seq2Seq architecture with attention mechanisms**.  
-Two attention variants are implemented and compared:
+This project implements a **neural machine translation (NMT)** system for **Myanmar (Burmese) to English** using a **Seq2Seq architecture with attention mechanisms**. 
+
+Two attention variants are implemented and compared through - 
 
 - **General Attention**
-- **Additive (Bahdanau) Attention**
+- **Additive Attention**
 
-The best-performing model is deployed in a simple **Flask web application**.
+The best-performing model  is deployed in a simple **Flask web application**.
 
 ---
 
@@ -15,12 +16,13 @@ The best-performing model is deployed in a simple **Flask web application**.
 ### Source
 The **TED2020 Myanmar–English parallel corpus** from the OPUS project is used.
 
-- Language pair: `my` → `en`
+- Language pair: `my` (Myanmar) → `en` (English)
 - Source: https://opus.nlpl.eu/TED2020.php
-- License: CC BY-NC-ND 4.0
 
 ### Data Split
-The dataset is divided into:
+
+The dataset is divided into three components as follows. 
+
 - Training set  
 - Validation set  
 - Test set  
@@ -42,12 +44,12 @@ We apply **SentencePiece BPE** with a **shared vocabulary** for source and targe
   - `<eos>` = 2
   - `<unk>` = 3
 
-To improve efficiency:
+To improve efficiency, I removed 
 - Empty lines are removed
 - Very long lines are filtered
 - A maximum of 30,000 lines are sampled
 
-Tokenizer files:
+Tokenizer files are stored in artefacts.
 - artefacts/
 - spm_my_en.model
 - spm_my_en.vocab
@@ -105,10 +107,10 @@ Both models are trained under identical settings.
 ### BLEU Score
 Models are evaluated on the test set using BLEU.
 
-| Model | Validation Loss | Validation PPL | BLEU |
-|------|----------------:|---------------:|-----:|
-| General Attention | Higher | Higher | Lower |
-| **Additive Attention** | **Lower** | **Lower** | **Higher** |
+| Model | Train Loss| Training PPL |Validation Loss | Validation PPL | BLEU |
+|------|-----------:|-------------:|---------------:|---------------:|-----:|
+| General Attention | 4.761435 | 116.913635 | 5.752427 | 314.954146| 1.529256|
+| Additive Attention | 4.582834 | 97.791187 | 5.618843 | 275.570333| 2.133739|
 
 The **Additive Attention** model achieves the best overall performance.
 
@@ -184,3 +186,10 @@ python app.py
 
 ### Step 4: Open in browser
 http://127.0.0.1:5001
+
+
+# Output 
+
+![input](assets/output.png)<br>
+
+It is not the accurate translation but it is close. I believe my model is doing not well because of the smaller dataset, lower weighted layer and also the nature of my native language. 
