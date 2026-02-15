@@ -99,3 +99,4 @@ NLP system, from implementing BERT from scratch to fine-tuning for
 sentence-level inference and deploying a working web application.
 
 ## Output
+![input](assets/output.png)<br>
