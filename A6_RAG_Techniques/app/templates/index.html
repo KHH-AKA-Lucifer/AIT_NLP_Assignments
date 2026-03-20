@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter {{ chapter_number }} RAG Chatbot</title>
+  <style>
+    :root {
+      --bg: #f5efe4;
+      --panel: rgba(255, 252, 245, 0.92);
+      --panel-strong: #fffaf1;
+      --text: #1f2a24;
+      --muted: #5f6e64;
+      --accent: #a24936;
+      --accent-dark: #7e3527;
+      --line: rgba(31, 42, 36, 0.12);
+      --shadow: 0 18px 50px rgba(56, 43, 29, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(162, 73, 54, 0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(105, 141, 115, 0.16), transparent 28%),
+        linear-gradient(180deg, #f7f2e9 0%, #f1e6d6 100%);
+      min-height: 100vh;
+    }
+
+    .shell {
+      width: min(1100px, calc(100% - 32px));
+      margin: 32px auto;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .sidebar,
+    .workspace {
+      padding: 24px;
+    }
+
+    h1,
+    h2 {
+      margin: 0 0 12px;
+      line-height: 1.1;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(162, 73, 54, 0.24);
+      background: rgba(162, 73, 54, 0.08);
+      color: var(--accent-dark);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    .meta {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .meta-card {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+    }
+
+    .meta-label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .meta-value {
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px 18px;
+      font: inherit;
+      font-size: 1rem;
+      line-height: 1.5;
+      background: #fffdf8;
+      color: var(--text);
+    }
+
+    textarea:focus {
+      outline: 2px solid rgba(162, 73, 54, 0.22);
+      border-color: rgba(162, 73, 54, 0.35);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent) 0%, #c96c52 100%);
+      color: white;
+      font: inherit;
+      font-weight: 600;
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+      box-shadow: 0 10px 24px rgba(162, 73, 54, 0.24);
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.7;
+      transform: none;
+    }
+
+    .status {
+      min-height: 24px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .answer-card,
+    .sources-card {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 20px;
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+    }
+
+    .answer-text {
+      white-space: pre-wrap;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .sources {
+      display: grid;
+      gap: 14px;
+    }
+
+    .source-item {
+      padding: 16px;
+      border-radius: 18px;
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    .source-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: var(--accent-dark);
+    }
+
+    .source-context {
+      margin-bottom: 10px;
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .source-preview {
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: #fffdf8;
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+    }
+
+    @media (max-width: 900px) {
+      .shell {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <aside class="panel sidebar">
+      <div class="badge">Task 3 Chatbot Demo</div>
+      <h1>Chapter {{ chapter_number }} RAG Chatbot</h1>
+      <p>
+        Ask a question about your assigned chapter and the app will retrieve the most relevant chunks
+        before generating a grounded answer.
+      </p>
+      <div class="meta">
+        <div class="meta-card">
+          <span class="meta-label">Retrieval Mode</span>
+          <span class="meta-value">{{ retrieval_mode }}</span>
+        </div>
+        <div class="meta-card">
+          <span class="meta-label">Model</span>
+          <span class="meta-value">{{ model_name }}</span>
+        </div>
+        <div class="meta-card">
+          <span class="meta-label">How To Read Sources</span>
+          <span class="meta-value">Each source card shows the retrieved chunk id, similarity score, and a text preview.</span>
+        </div>
+      </div>
+    </aside>
+
+    <section class="panel workspace">
+      <h2>Ask a Chapter Question</h2>
+      <p>
+        The answer is generated only after retrieval, and the supporting chunks are shown underneath so
+        you can inspect what the chatbot used.
+      </p>
+
+      <form id="chat-form">
+        <textarea id="question" name="question" placeholder="Example: What is teacher forcing and why is it used during training?"></textarea>
+        <div class="examples">
+          <button class="chip" type="button" data-question="What is teacher forcing and why is it used during training?">Teacher forcing</button>
+          <button class="chip" type="button" data-question="What does hallucination mean in the context of large language models?">Hallucination</button>
+          <button class="chip" type="button" data-question="How does temperature sampling affect the output distribution of an LLM?">Temperature sampling</button>
+        </div>
+        <div class="actions">
+          <button id="submit-btn" type="submit">Ask the chatbot</button>
+          <div id="status" class="status"></div>
+        </div>
+      </form>
+
+      <div id="answer-card" class="answer-card" hidden>
+        <h2>Answer</h2>
+        <div id="answer-text" class="answer-text"></div>
+      </div>
+
+      <div id="sources-card" class="sources-card" hidden>
+        <h2>Retrieved Sources</h2>
+        <div id="sources" class="sources"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('chat-form');
+    const questionInput = document.getElementById('question');
+    const submitBtn = document.getElementById('submit-btn');
+    const statusEl = document.getElementById('status');
+    const answerCard = document.getElementById('answer-card');
+    const answerText = document.getElementById('answer-text');
+    const sourcesCard = document.getElementById('sources-card');
+    const sourcesEl = document.getElementById('sources');
+
+    for (const chip of document.querySelectorAll('.chip')) {
+      chip.addEventListener('click', () => {
+        questionInput.value = chip.dataset.question;
+        questionInput.focus();
+      });
+    }
+
+    function renderSources(sources) {
+      sourcesEl.innerHTML = '';
+
+      for (const source of sources) {
+        const item = document.createElement('article');
+        item.className = 'source-item';
+
+        const topline = document.createElement('div');
+        topline.className = 'source-topline';
+        topline.innerHTML = `<strong>Chunk ${source.chunk_id}</strong><span>score: ${source.score.toFixed(4)}</span>`;
+        item.appendChild(topline);
+
+        if (source.context) {
+          const context = document.createElement('div');
+          context.className = 'source-context';
+          context.textContent = source.context;
+          item.appendChild(context);
+        }
+
+        const preview = document.createElement('div');
+        preview.className = 'source-preview';
+        preview.textContent = source.preview;
+        item.appendChild(preview);
+
+        sourcesEl.appendChild(item);
+      }
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const question = questionInput.value.trim();
+      if (!question) {
+        statusEl.textContent = 'Please enter a question first.';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      statusEl.textContent = 'Retrieving chunks and generating an answer...';
+      answerCard.hidden = true;
+      sourcesCard.hidden = true;
+
+      try {
+        const response = await fetch('/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ question })
+        });
+
+        const payload = await response.json();
+        if (!response.ok) {
+          throw new Error(payload.error || 'The request failed.');
+        }
+
+        answerText.textContent = payload.answer;
+        renderSources(payload.sources || []);
+
+        answerCard.hidden = false;
+        sourcesCard.hidden = false;
+        statusEl.textContent = `Answered with ${payload.mode} using ${payload.model}.`;
+      } catch (error) {
+        statusEl.textContent = error.message;
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
