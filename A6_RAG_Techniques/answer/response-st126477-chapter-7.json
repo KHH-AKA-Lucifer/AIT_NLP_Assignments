@@ -1,0 +1,122 @@
+[
+  {
+    "question": "What is a Large Language Model (LLM)?",
+    "ground_truth_answer": "An LLM is a computational agent or neural network that is designed to interact conversationally with people by predicting the next word from previous words in a given context or prefix. [cite: 13, 60, 78]",
+    "naive_rag_answer": "A Large Language Model (LLM) is a neural network that predicts the next word based on a given context or prefix of words, outputting a probability distribution over possible next words. It is a larger version of traditional language models and is used for conditional text generation.",
+    "contextual_retrieval_answer": "A Large Language Model (LLM) is a neural network that predicts the next word in a sequence based on a given context or prefix. It outputs a probability distribution over possible next words, allowing for the generation of text conditioned on input prompts."
+  },
+  {
+    "question": "What is the definition of 'pretraining' in the context of LLMs?",
+    "ground_truth_answer": "Pretraining is the process of learning knowledge about language and the world by iteratively predicting tokens in vast amounts of text. [cite: 41]",
+    "naive_rag_answer": "In the context of LLMs, 'pretraining' refers to the process of setting the model's weights through learning from text data, which is foundational for the model's ability to understand and generate language.",
+    "contextual_retrieval_answer": "In the context of large language models (LLMs), 'pretraining' refers to the initial training phase where the model learns to predict the next word in a sequence based on a given context or prefix of words. This process establishes the foundational weights of the model before it undergoes any task-specific fine-tuning."
+  },
+  {
+    "question": "What is 'teacher forcing'?",
+    "ground_truth_answer": "Teacher forcing is a training approach where the model is always given the correct history sequence to predict the next word, rather than feeding the model its own best guess from the previous time step. [cite: 562]",
+    "naive_rag_answer": "Teacher forcing is a training technique where, during the training of a language model, the correct sequence of tokens is provided to the model to predict the next word, rather than using the model's own previous predictions. This ensures that the model always has the correct history sequence to estimate the probability of the next token.",
+    "contextual_retrieval_answer": "Teacher forcing is a training technique where, at each step, the model is provided with the correct sequence of tokens from the training data to predict the next word, rather than using its own previous predictions. This approach helps the model learn more effectively by ensuring it always has the correct context."
+  },
+  {
+    "question": "What is a 'prompt'?",
+    "ground_truth_answer": "A prompt is a text string issued by a user to a language model to get the model to do something useful, such as answering a question or following an instruction. [cite: 219]",
+    "naive_rag_answer": "A 'prompt' is a text string issued by a user to a language model to elicit a useful response, guiding the model to generate tokens based on the provided input.",
+    "contextual_retrieval_answer": "A 'prompt' is a text string issued by a user to a language model to elicit a useful response, which the model generates by iteratively producing tokens conditioned on the prompt."
+  },
+  {
+    "question": "What is 'perplexity' in language model evaluation?",
+    "ground_truth_answer": "Perplexity is a length-normalized metric used to evaluate how well a model predicts unseen text; it is the inverse probability a model assigns to a test set, normalized by the test set length. [cite: 701, 702]",
+    "naive_rag_answer": "Perplexity in language model evaluation is a metric that measures the inverse probability assigned to a test set, normalized by the number of tokens in the set. It is calculated as the inverse of the probability of the test set, and a lower perplexity indicates a better model, as it corresponds to a higher probability of the word sequence. Perplexity is sensitive to the tokenization algorithm used, making comparisons between models with different tokenizers challenging.",
+    "contextual_retrieval_answer": "Perplexity in language model evaluation is a metric that measures how well a model predicts a sequence of words. It is defined as the inverse probability of the test set, normalized by the number of tokens in the set. A lower perplexity indicates a better model, as it corresponds to a higher probability assigned to the word sequence. Perplexity is sensitive to the tokenization algorithm used, making comparisons between models with different tokenizers challenging."
+  },
+  {
+    "question": "How does temperature sampling work?",
+    "ground_truth_answer": "It reshapes the probability distribution by dividing the logits by a temperature parameter (τ) before the softmax; a low τ increases the probability of high-probability tokens, making the model more 'greedy.' [cite: 403, 405, 459]",
+    "naive_rag_answer": "Temperature sampling reshapes the probability distribution of token selection by dividing the logits by a temperature parameter (τ) before applying the softmax function. A lower temperature (τ < 1) increases the probability of high-probability tokens and decreases that of low-probability tokens, making the distribution more greedy. Conversely, a higher temperature (τ > 1) flattens the distribution, allowing for more exploration of lower-probability tokens. As τ approaches 0, the selection becomes nearly greedy, favoring the most likely tokens.",
+    "contextual_retrieval_answer": "Temperature sampling reshapes the probability distribution of tokens by dividing the logits by a temperature parameter (τ) before applying the softmax function. A lower τ (between 0 and 1) increases the probability of high-probability tokens and decreases that of low-probability tokens, making the distribution more greedy. Conversely, a higher τ (>1) flattens the distribution, allowing for more exploration of lower-probability tokens. As τ approaches 0, the sampling approaches greedy decoding, favoring the most likely token."
+  },
+  {
+    "question": "How do children achieve high rates of vocabulary growth according to the text?",
+    "ground_truth_answer": "Research suggests the bulk of vocabulary acquisition happens as a by-product of reading, which is a process of rich contextual processing rather than learning words in isolation. [cite: 32, 33]",
+    "naive_rag_answer": "Children achieve high rates of vocabulary growth by learning about 7 to 10 words a day, primarily through reading. This process involves rich contextual processing, where understanding of words is strengthened through their associations with other words encountered in texts. The distributional hypothesis supports this by suggesting that meaning can be learned from the complex associations of words in the texts children read.",
+    "contextual_retrieval_answer": "Children achieve high rates of vocabulary growth by learning about 7 to 10 words a day, primarily through reading. This process involves rich contextual processing, where understanding of words is strengthened through their associations with other words encountered in texts. The distributional hypothesis supports this by suggesting that meaning can be learned from the complex associations of words in the texts children read."
+  },
+  {
+    "question": "How is an LLM turned from a predictive model into a generative one?",
+    "ground_truth_answer": "It is turned into a generative model by repeatedly sampling from its output probability distribution and adding each generated token back into the context as a prefix for the next prediction. [cite: 101, 103]",
+    "naive_rag_answer": "An LLM is turned from a predictive model into a generative one by sampling from the probability distribution it generates for the next word. This process involves iteratively predicting and generating words in a left-to-right manner, where each generated token is added to the context for predicting the subsequent token. This autoregressive approach allows the model to create coherent text based on the preceding context.",
+    "contextual_retrieval_answer": "An LLM is turned from a predictive model into a generative one by sampling from the probability distribution it generates for the next word. This process involves iteratively predicting and generating words in a left-to-right manner, where each generated token is added to the context for predicting the subsequent token. This autoregressive approach allows the model to create novel outputs based on prior words."
+  },
+  {
+    "question": "How does 'in-context learning' differ from standard training?",
+    "ground_truth_answer": "In-context learning improves performance through the provided context and activations in the network without involving gradient-based updates to the model's underlying parameters. [cite: 263, 265]",
+    "naive_rag_answer": "In-context learning differs from standard training in that it does not involve updating the model's underlying parameters through gradient descent. Instead, it relies on the context and activations within the network to improve performance based on examples provided during prompting.",
+    "contextual_retrieval_answer": "In-context learning differs from standard training in that it does not involve updating the model's weights through gradient descent. Instead, it relies on the context provided by demonstrations to help the model perform new tasks, affecting only the activations in the network without changing the underlying parameters."
+  },
+  {
+    "question": "How is 'alignment' performed in the three-stage training process?",
+    "ground_truth_answer": "The model is trained on preference data (labeled 'accepted' vs. 'rejected' continuations) using reinforcement learning or reward-based algorithms to make it maximally helpful and less harmful. [cite: 514, 516]",
+    "naive_rag_answer": "Alignment, also known as preference alignment, is performed in the final stage of the three-stage training process by training the model to be maximally helpful and less harmful. This involves using preference data, which consists of a context followed by two potential continuations labeled as 'accepted' and 'rejected.' The model is then trained using reinforcement learning or other reward-based algorithms to produce the accepted continuation and avoid the rejected one.",
+    "contextual_retrieval_answer": "Alignment, also known as preference alignment, is performed in the final stage of the training process by training the model to be maximally helpful and less harmful. This involves providing the model with preference data, which consists of a context followed by two potential continuations labeled as 'accepted' and 'rejected.' The model is then trained using reinforcement learning or other reward-based algorithms to produce the accepted continuation and avoid the rejected one."
+  },
+  {
+    "question": "What is the difference between an Encoder and a Decoder architecture?",
+    "ground_truth_answer": "Decoders generate novel output tokens one at a time from left-to-right (generative), whereas Encoders produce vector representations for tokens and are typically used for classification rather than generation. [cite: 135, 136, 146, 151]",
+    "naive_rag_answer": "The difference between an Encoder and a Decoder architecture lies in their functions and outputs. An Encoder takes a sequence of tokens as input and produces a vector representation for each token, typically used for tasks like classification. In contrast, a Decoder takes a series of tokens as input and generates output tokens iteratively, functioning as a generative model that creates novel text. An Encoder-Decoder architecture combines both, taking input tokens and generating a series of output tokens, often used for tasks like machine translation.",
+    "contextual_retrieval_answer": "The main difference between Encoder and Decoder architectures lies in their functions and outputs. Encoder models take a sequence of tokens as input and produce a vector representation for each token, primarily used for tasks like classification. In contrast, Decoder models take a series of tokens as input and generate output tokens iteratively, functioning as generative models that create novel text. Encoder-Decoder architectures combine both, taking input tokens and generating a series of output tokens, often used for tasks like machine translation."
+  },
+  {
+    "question": "How does greedy decoding compare to random sampling?",
+    "ground_truth_answer": "Greedy decoding always chooses the single most likely token and is deterministic, while random sampling chooses tokens according to their probability distribution, introducing more diversity. [cite: 321, 352, 359]",
+    "naive_rag_answer": "Greedy decoding selects the highest probability word at each step, resulting in predictable and often repetitive text. In contrast, random sampling chooses words based on their probabilities, which can lead to more diverse outputs but may also generate odd, low-probability tokens, resulting in weird sentences. Thus, greedy decoding is too deterministic, while random sampling can be too erratic.",
+    "contextual_retrieval_answer": "Greedy decoding selects the highest probability word at each step, resulting in predictable and often repetitive text. In contrast, random sampling chooses words based on their probabilities, which can lead to more diverse outputs but may also generate odd, low-probability tokens, resulting in weird sentences. Thus, greedy decoding is too deterministic, while random sampling can be too erratic."
+  },
+  {
+    "question": "What is the difference between zero-shot and few-shot prompting?",
+    "ground_truth_answer": "Zero-shot prompting provides instructions without labeled examples, while few-shot prompting includes labeled examples (demonstrations) within the prompt to help the model perform the task. [cite: 234, 235]",
+    "naive_rag_answer": "The difference between zero-shot and few-shot prompting lies in the inclusion of examples. Zero-shot prompting involves instructions without any labeled examples, while few-shot prompting includes some labeled examples, referred to as demonstrations, to help guide the model's responses.",
+    "contextual_retrieval_answer": "The difference between zero-shot and few-shot prompting lies in the inclusion of examples. Zero-shot prompting involves instructions that do not include any labeled examples, while few-shot prompting includes some labeled examples, referred to as demonstrations."
+  },
+  {
+    "question": "How do modern LLMs differ from traditional n-gram models?",
+    "ground_truth_answer": "N-gram models predict words based only on a handful of previous words (like bigrams or trigrams), whereas LLMs can use contexts of thousands or tens of thousands of words. [cite: 80, 81]",
+    "naive_rag_answer": "Modern LLMs differ from traditional n-gram models primarily in their architecture and learning approach. While n-gram models rely on fixed-length sequences of words to predict the next word based on a limited context, LLMs utilize neural networks, particularly transformer architectures, to learn from larger contexts and capture complex linguistic properties. LLMs also incorporate pretraining, allowing them to learn from vast amounts of text data, which enhances their ability to generate coherent and contextually relevant responses.",
+    "contextual_retrieval_answer": "Modern LLMs differ from traditional n-gram models primarily in their ability to handle much longer contexts, allowing them to consider tens of thousands of tokens for generating responses. While n-gram models typically rely on fixed-length sequences of words, LLMs utilize neural networks to predict the next word based on a broader context, integrating various features and embeddings for improved accuracy and flexibility in language understanding."
+  },
+  {
+    "question": "Why is the 'system prompt' important for LLM interaction?",
+    "ground_truth_answer": "The system prompt is a first instruction that defines the task, role, tone, and overall context for the LM, and it is silently prepended to all user text. [cite: 266, 267]",
+    "naive_rag_answer": "The 'system prompt' is important for LLM interaction because it serves as the initial instruction that defines the task or role of the language model, setting the overall tone and context for the interaction. It is silently prepended to any user text, guiding the model's responses to be more aligned with the intended purpose.",
+    "contextual_retrieval_answer": "The 'system prompt' is important for LLM interaction because it serves as the first instruction to the language model, defining the task or role, and setting the overall tone and context for the interaction. It is silently prepended to any user text, guiding the model's responses."
+  },
+  {
+    "question": "What is the importance of the 'distributional hypothesis' for LLMs?",
+    "ground_truth_answer": "It proposes that meaning can be learned from text based on the complex association of words with their co-occurring words, allowing models to acquire knowledge simply from reading. [cite: 36, 37]",
+    "naive_rag_answer": "The 'distributional hypothesis' is important for LLMs because it suggests that meaning can be learned from the context in which words co-occur in texts. This principle underlies how LLMs acquire knowledge from vast amounts of text data, allowing them to understand and generate language based on the complex associations between words.",
+    "contextual_retrieval_answer": "The 'distributional hypothesis' is important for large language models (LLMs) because it suggests that knowledge about language and meaning can be acquired from the complex associations of words in text. This hypothesis underpins the ability of LLMs to learn from vast amounts of text by predicting the next word based on context, enabling them to exhibit remarkable performance on natural language tasks."
+  },
+  {
+    "question": "Why is quality filtering necessary for pretraining corpora?",
+    "ground_truth_answer": "Filtering removes boilerplate text, adult content, personal identifiable information (PII), and duplicate documents, which generally improves the performance of the language model. [cite: 634, 635, 637]",
+    "naive_rag_answer": "Quality filtering is necessary for pretraining corpora to improve language model performance by ensuring the inclusion of high-quality reference materials, such as Wikipedia and books, while avoiding low-quality content, personal identifiable information (PII), and adult content. Additionally, it helps in removing duplicate documents and boilerplate text, which are common on the web.",
+    "contextual_retrieval_answer": "Quality filtering is necessary for pretraining corpora to improve language model performance by ensuring the inclusion of high-quality reference materials, such as Wikipedia and books, while avoiding low-quality content, personal identifiable information (PII), and adult content. It also involves deduplication to remove duplicate documents and text, which enhances the overall effectiveness of the model."
+  },
+  {
+    "question": "What is 'hallucination' in the context of LLMs?",
+    "ground_truth_answer": "Hallucination is a safety issue where LLMs generate text that is false or incorrect because the training algorithm lacks a mechanism to enforce factuality. [cite: 778, 779]",
+    "naive_rag_answer": "In the context of large language models (LLMs), 'hallucination' refers to the tendency of these models to generate text that is false or incorrect. This occurs because the training algorithms do not ensure that the generated text is factually accurate, leading to significant issues in applications where factual correctness is crucial.",
+    "contextual_retrieval_answer": "In the context of large language models (LLMs), 'hallucination' refers to the tendency of these models to generate text that is false or incorrect. This occurs because the training algorithms do not ensure that the generated text is factually accurate, leading to significant issues in applications where factual correctness is crucial."
+  },
+  {
+    "question": "What is the challenge of 'data contamination' in model evaluation?",
+    "ground_truth_answer": "Data contamination occurs when test set data makes its way into the training set, leading the evaluation metrics to overstate the model's actual performance. [cite: 751, 753]",
+    "naive_rag_answer": "The challenge of 'data contamination' in model evaluation occurs when some part of the test dataset inadvertently overlaps with the training dataset. This can lead to an overestimation of a model's performance, as it may have already seen and learned from the test questions. To mitigate this issue, it is suggested to disclose the exact training data or report any overlap with specific test sets.",
+    "contextual_retrieval_answer": "The challenge of 'data contamination' in model evaluation occurs when some part of the test dataset overlaps with the training dataset. This can lead to an overestimation of a model's performance, as it may have already seen and learned from the test questions during training. To mitigate this issue, it is suggested to disclose the exact training data or report any overlap with specific test sets."
+  },
+  {
+    "question": "What are the primary ethical concerns regarding pretraining data scraped from the web?",
+    "ground_truth_answer": "Key concerns include potential copyright violations, lack of data consent from website owners, privacy issues from leaked PII, and demographic skew. [cite: 647, 649, 652, 655]",
+    "naive_rag_answer": "The primary ethical concerns regarding pretraining data scraped from the web include:\n\n1. **Copyright Issues**: Much of the text in these datasets is copyrighted, raising questions about the legality of using such content without permission.\n2. **Privacy Violations**: There is a risk of including private information, such as phone numbers and email addresses, despite efforts to filter out such data.\n3. **Skewed Representation**: The training data is disproportionately generated by authors from the US and developed countries, which may lead to a bias in perspectives and topics represented in the model.",
+    "contextual_retrieval_answer": "The primary ethical concerns regarding pretraining data scraped from the web include:\n\n1. **Copyright Issues**: Many texts used for training are copyrighted, and the legality of using such content for generating competing text is uncertain.\n2. **Data Consent**: Website owners can indicate their preference against being crawled, but the legal status of these indications varies by country, complicating compliance.\n3. **Privacy**: Large datasets may inadvertently include private information, such as phone numbers and email addresses, which raises significant privacy concerns."
+  }
+]

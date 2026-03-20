@@ -1,0 +1,82 @@
+[
+  {
+    "question": "What is a Large Language Model (LLM)?",
+    "ground_truth_answer": "An LLM is a computational agent or neural network that is designed to interact conversationally with people by predicting the next word from previous words in a given context or prefix. [cite: 13, 60, 78]"
+  },
+  {
+    "question": "What is the definition of 'pretraining' in the context of LLMs?",
+    "ground_truth_answer": "Pretraining is the process of learning knowledge about language and the world by iteratively predicting tokens in vast amounts of text. [cite: 41]"
+  },
+  {
+    "question": "What is 'teacher forcing'?",
+    "ground_truth_answer": "Teacher forcing is a training approach where the model is always given the correct history sequence to predict the next word, rather than feeding the model its own best guess from the previous time step. [cite: 562]"
+  },
+  {
+    "question": "What is a 'prompt'?",
+    "ground_truth_answer": "A prompt is a text string issued by a user to a language model to get the model to do something useful, such as answering a question or following an instruction. [cite: 219]"
+  },
+  {
+    "question": "What is 'perplexity' in language model evaluation?",
+    "ground_truth_answer": "Perplexity is a length-normalized metric used to evaluate how well a model predicts unseen text; it is the inverse probability a model assigns to a test set, normalized by the test set length. [cite: 701, 702]"
+  },
+  {
+    "question": "How does temperature sampling work?",
+    "ground_truth_answer": "It reshapes the probability distribution by dividing the logits by a temperature parameter (τ) before the softmax; a low τ increases the probability of high-probability tokens, making the model more 'greedy.' [cite: 403, 405, 459]"
+  },
+  {
+    "question": "How do children achieve high rates of vocabulary growth according to the text?",
+    "ground_truth_answer": "Research suggests the bulk of vocabulary acquisition happens as a by-product of reading, which is a process of rich contextual processing rather than learning words in isolation. [cite: 32, 33]"
+  },
+  {
+    "question": "How is an LLM turned from a predictive model into a generative one?",
+    "ground_truth_answer": "It is turned into a generative model by repeatedly sampling from its output probability distribution and adding each generated token back into the context as a prefix for the next prediction. [cite: 101, 103]"
+  },
+  {
+    "question": "How does 'in-context learning' differ from standard training?",
+    "ground_truth_answer": "In-context learning improves performance through the provided context and activations in the network without involving gradient-based updates to the model's underlying parameters. [cite: 263, 265]"
+  },
+  {
+    "question": "How is 'alignment' performed in the three-stage training process?",
+    "ground_truth_answer": "The model is trained on preference data (labeled 'accepted' vs. 'rejected' continuations) using reinforcement learning or reward-based algorithms to make it maximally helpful and less harmful. [cite: 514, 516]"
+  },
+  {
+    "question": "What is the difference between an Encoder and a Decoder architecture?",
+    "ground_truth_answer": "Decoders generate novel output tokens one at a time from left-to-right (generative), whereas Encoders produce vector representations for tokens and are typically used for classification rather than generation. [cite: 135, 136, 146, 151]"
+  },
+  {
+    "question": "How does greedy decoding compare to random sampling?",
+    "ground_truth_answer": "Greedy decoding always chooses the single most likely token and is deterministic, while random sampling chooses tokens according to their probability distribution, introducing more diversity. [cite: 321, 352, 359]"
+  },
+  {
+    "question": "What is the difference between zero-shot and few-shot prompting?",
+    "ground_truth_answer": "Zero-shot prompting provides instructions without labeled examples, while few-shot prompting includes labeled examples (demonstrations) within the prompt to help the model perform the task. [cite: 234, 235]"
+  },
+  {
+    "question": "How do modern LLMs differ from traditional n-gram models?",
+    "ground_truth_answer": "N-gram models predict words based only on a handful of previous words (like bigrams or trigrams), whereas LLMs can use contexts of thousands or tens of thousands of words. [cite: 80, 81]"
+  },
+  {
+    "question": "Why is the 'system prompt' important for LLM interaction?",
+    "ground_truth_answer": "The system prompt is a first instruction that defines the task, role, tone, and overall context for the LM, and it is silently prepended to all user text. [cite: 266, 267]"
+  },
+  {
+    "question": "What is the importance of the 'distributional hypothesis' for LLMs?",
+    "ground_truth_answer": "It proposes that meaning can be learned from text based on the complex association of words with their co-occurring words, allowing models to acquire knowledge simply from reading. [cite: 36, 37]"
+  },
+  {
+    "question": "Why is quality filtering necessary for pretraining corpora?",
+    "ground_truth_answer": "Filtering removes boilerplate text, adult content, personal identifiable information (PII), and duplicate documents, which generally improves the performance of the language model. [cite: 634, 635, 637]"
+  },
+  {
+    "question": "What is 'hallucination' in the context of LLMs?",
+    "ground_truth_answer": "Hallucination is a safety issue where LLMs generate text that is false or incorrect because the training algorithm lacks a mechanism to enforce factuality. [cite: 778, 779]"
+  },
+  {
+    "question": "What is the challenge of 'data contamination' in model evaluation?",
+    "ground_truth_answer": "Data contamination occurs when test set data makes its way into the training set, leading the evaluation metrics to overstate the model's actual performance. [cite: 751, 753]"
+  },
+  {
+    "question": "What are the primary ethical concerns regarding pretraining data scraped from the web?",
+    "ground_truth_answer": "Key concerns include potential copyright violations, lack of data consent from website owners, privacy issues from leaked PII, and demographic skew. [cite: 647, 649, 652, 655]"
+  }
+]
