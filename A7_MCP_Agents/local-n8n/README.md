@@ -1,88 +1,122 @@
-# 🚀 n8n Automation with PostgreSQL & ngrok
+# Assignment 7: MCP Server, AI Agent, and External Tool Integration
 
-This repository contains a Docker-based setup for **n8n**, a powerful workflow automation tool. It uses **PostgreSQL 16** for persistent storage and **ngrok** to provide a secure public tunnel for receiving external webhooks (e.g., Line, Facebook, Stripe).
+This folder contains my submission for Assignment 7 of `AT82.05 Artificial Intelligence: Natural Language Understanding (NLU)`. The goal of the assignment is to build an integrated AI agent ecosystem with the Model Context Protocol (MCP), deploy it in `n8n`, expose it through `ngrok`, and connect the agent to external services such as `Telegram` and `Google Calendar`.
 
-## 📂 Project Structure
+The implementation in this folder documents a local `n8n` setup backed by `PostgreSQL`, an MCP server workflow with internal tools, and an AI agent workflow that can be extended to real-world scheduling tasks. The screenshots in `assets/` are used as submission evidence for both Task 1 and Task 2.
 
-```text
-.
-├── docker-compose.yaml    # Container orchestration and service definitions
-├── .env                   # Environment variables (Credentials & URLs)
-├── .env.key               # Encryption key for environment variables
-├── .gitignore             # Specifies intentionally untracked files to ignore
-└── README.md              # Project documentation
-```
+## Assignment Summary
 
------
+The PDF brief (`NLP_2026_A7_MCP_n8n.pdf`) asks for two major deliverables:
 
-## 🛠 Prerequisites
+1. `Task 1`: Deploy `n8n` locally with Docker, expose it to the internet with `ngrok`, create an MCP server workflow with at least three tools, and connect an AI agent client to that MCP server.
+2. `Task 2`: Connect the agent to `Telegram`, integrate `Google Calendar`, and verify that the agent can create and check project schedule events through chat.
 
-1.  **Docker & Docker Compose**: Ensure you have Docker Desktop or Docker Engine installed.
-2.  **ngrok**: Installed and authenticated on your local machine.
+## Repository Contents
 
------
+- `docker-compose.yaml`: Docker setup for `n8n` and `PostgreSQL`
+- `.env.key`: example environment variables for database settings and `ngrok`
+- `assets/`: screenshots showing the implemented workflows and tool integrations
+- `NLP_2026_A7_MCP_n8n.pdf`: assignment specification
 
-## 🚀 Getting Started
+## Local Infrastructure
 
-### 1\. Configuration
+The local environment is defined in `docker-compose.yaml`:
 
-Create a `.env` file in the root directory. Copy and paste the following, then update with your desired values:
+- `postgres:16-alpine` is used as the persistent database for `n8n`
+- `n8n` runs on port `5678`
+- the application timezone is configured as `Asia/Bangkok`
+- `WEBHOOK_URL` is routed through `NGROK_URL` so webhooks and MCP endpoints can be reached from outside the local machine
+
+The provided `.env.key` acts as a template for the required environment variables:
 
 ```env
-# Database Configuration
 DB_USER=n8n_admin
-DB_PASSWORD=your_secure_password
+DB_PASSWORD=password
 DB_NAME=n8n_db
-
-# ngrok Configuration
-# Get your URL by running: ngrok http 5678
-NGROK_URL=https://your-unique-id.ngrok-free.app
+NGROK_URL=https://xxxx-xxx-xxx.ngrok-free.app
 ```
 
-### 2\. Launching Services
+To run this setup locally:
 
-Run the following command to start both the database and n8n in the background:
+1. Create a `.env` file from `.env.key`.
+2. Start the services with `docker compose up -d`.
+3. Open `http://localhost:5678`.
+4. Start `ngrok` and update `NGROK_URL` so external webhooks point to the active public URL.
 
-```bash
-docker-compose up -d
-```
+## Task 1: MCP Infrastructure and Server Setup
 
-### 3\. Accessing n8n
+For Task 1, the system is organized around a local `n8n` deployment and a dedicated MCP server workflow. The MCP server exposes internal tools that can be discovered and called by a separate AI agent workflow. Based on the workflow screenshots, the implementation includes the required three internal tools:
 
-  * **Local UI:** [http://localhost:5678](https://www.google.com/search?q=http://localhost:5678)
-  * **Public Webhooks:** Use the `NGROK_URL` provided in your `.env` for external services to reach your workflows.
+- `Calculator`
+- `Date/Time`
+- `Text Formatter`
 
------
+The overall workflow structure is shown below.
 
-## ⚠️ Important Notes
+![Task 1 MCP server and AI agent workflow](assets/Task1.png)
 
-### Persistent Data
+The individual MCP tools are shown in the following screenshots.
 
-Upon the first run, Docker will automatically create two directories:
+### Calculator Tool
 
-  * `./postgres_data`: Stores all your database records (Workflows, executions).
-  * `./n8n_data`: Stores n8n internal configurations.
-    **Do not delete these folders unless you want to reset your entire setup.**
+This tool provides arithmetic support to the MCP server so the agent can delegate calculation requests instead of handling them only through the language model.
 
-### Updating ngrok URL
+![Calculator tool](assets/calculator.png)
 
-If you are using a free ngrok account, the URL changes every time you restart ngrok. When it changes:
+### Date/Time Tool
 
-1.  Update the `NGROK_URL` in your `.env` file.
-2.  Restart the container to apply changes: `docker-compose up -d`.
+This tool allows the agent to retrieve or format time-related information, which is useful for scheduling and calendar-oriented requests.
 
------
+![Date and time tool](assets/date_time.png)
 
-## 🛠 Troubleshooting
+### Text Formatter Tool
 
-### "Password authentication failed"
+This tool supports text manipulation inside the MCP server workflow and expands the range of structured operations that the agent can perform.
 
-If you see this error in the logs, it means the database was initialized with a different password previously. To reset:
+![Text formatter tool](assets/text-formatter.png)
 
-```bash
-docker-compose down -v
-rm -rf ./postgres_data
-docker-compose up -d
-```
+## Task 2: Telegram and Google Calendar Integration
 
-*(Warning: This will wipe all existing workflows and data.)*
+Task 2 extends the agent from a local tool-using workflow into a practical assistant that can communicate through `Telegram` and manage events in `Google Calendar`.
+
+From the submitted screenshots, the agent is connected to external messaging and calendar services so that scheduling instructions can be sent through chat and reflected as calendar events. According to the assignment brief, the project schedule should include these four phases:
+
+- `1st Phase`: Literature Review
+- `2nd Phase`: Project Proposal
+- `3rd Phase`: Update Progress
+- `4th Phase`: Final (Presentation)
+
+### Telegram-Based Agent Interaction
+
+The following screenshot documents the Task 2 workflow that connects the agent to `Telegram` and enables user interaction through messages.
+
+![Telegram and scheduling workflow](assets/AIT_Task2.png)
+
+### Google Calendar Verification
+
+The next screenshot shows the resulting events in `Google Calendar`, which is the required evidence that the workflow can create and manage project schedule entries.
+
+Chats From Telegram
+
+![ChatfromTelegram](assets/chatbot_1.png)
+
+![ChatfromTelegram](assets/chatbot_2.png)
+
+Google Calendar 
+
+![Google Calendar events](assets/Google_Calendar.png)
+
+## What This Submission Demonstrates
+
+This submission satisfies the main goals of the assignment:
+
+- a local `n8n` environment deployed with Docker
+- public webhook support through `ngrok`
+- an MCP server workflow with at least three internal tools
+- an AI agent workflow that can call MCP tools
+- integration with `Telegram` for conversational interaction
+- integration with `Google Calendar` for schedule creation and verification
+
+## Notes
+
+This folder currently contains the infrastructure file and screenshot evidence, but not exported `n8n` workflow JSON files. For that reason, this README is written as a documentation-oriented submission summary based on the committed setup files and the workflow screenshots in `assets/`.
